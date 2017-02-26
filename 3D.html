@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+		<title>3D移动端</title>
+		
+		<style>
+			/*main strat*/
+			*{ padding-bottom:0 ; margin:0 ;}
+			li{ list-style: none;}
+			img { vertical-align: top; border: none;}
+			html{ overflow: hidden;}
+			#main{ width:640px; height: 960px; position: relative; left: 50%; margin-left:-320px ; }
+			/*main end*/
+			
+			#view{ width:100%; height:100%;-webkit-perspective:300000px ; perspective:300000px ; z-index: 8; position:relative; background: black;}
+			/*list strat*/
+			#list{ width: 640px ; height:960px; position:relative; transform-style:preserve-3d;-webkit-transform-style:preserve-3d; transition:1s; transform-origin: center center -831.38px; -webkit-transform-origin: center center -831.38px;  }
+			#list li{ width:100%;  height:100% ; position: absolute; left: 0; top:0 ; transform-style: preserve-3d;-webkit-transform-style: preserve-3d; overflow: hidden ;}
+			#list li:nth-of-type(1){ }
+			#list li:nth-of-type(2){ -webkit-transform-origin:top;transform-origin:top; -webkit-transform:translateY(960px) rotateX(-60deg); transform:translateY(960px) rotateX(-60deg);}
+			#list li:nth-of-type(3){-webkit-transform-origin:top;transform-origin:top; -webkit-transform: translateY(1440px) translateZ(-831.38px) rotateX(-120deg); transform: translateY(1440px) translateZ(-831.38px) rotateX(-120deg); -webkit-perspective: 3000px; perspective: 3000px;}
+			#list li:nth-of-type(4){ ; -webkit-transform: translateZ(-1662.77px) rotateX(-180deg); transform: translateZ(-1662.77px) rotateX(-180deg);}
+			#list li:nth-of-type(5){ ;-webkit-transform-origin:bottom;transform-origin:bottom; -webkit-transform:translateY(-1440px) translateZ(-831.38px) rotateX(120deg); transform:translateY(-1440px) translateZ(-831.38px) rotateX(120deg); }
+			#list li:nth-of-type(6){ -webkit-transform-origin:bottom;transform-origin:bottom; -webkit-transform: translateY(-960px) rotateX(60deg); transform: translateY(-960px) rotateX(60deg);}
+			#page div{ width: 100%; height: 100%; position: absolute; left:0; top:0; -webkit-transform-origin:left ; transform-origin:left ; transition:2s;}
+			#page div:nth-of-type(1){ z-index: 3;}
+			#page div:nth-of-type(2){ z-index: 2; }
+			#page div:nth-of-type(3){ z-index: 1;}
+			
+			/*carAnimation start*/
+			#list .car{ width:150px ; height:150px ; position: absolute; left:0 ; top:0 ; z-index:4 ;opacity: 0;}
+			#list .car img{ width:100% ;}
+			#list .car1An{animation:2s car1In forwards ;-webkit-animation:2s car1In forwards ;}
+			@-webkit-keyframes car1In {
+				0%{ -webkit-transform: translateY(0px) ; transform: translateY(0px) ; opacity: 0;}
+				50%{-webkit-transform: translateX(150px) ;transform: translateX(150px) ; opacity: 0.5;}
+				100%{-webkit-transform: translate(70px,100px) ;transform: translate(70px,100px) ; opacity: 1;}
+			}
+			@keyframes car1In{
+				0%{ -webkit-transform: translateY(0px) ; transform: translateY(0px) ; opacity: 0;}
+				50%{-webkit-transform: translateX(150px) ;transform: translateX(150px) ; opacity: 0.5;}
+				100%{-webkit-transform: translate(70px,100px) ;transform: translate(70px,100px) ; opacity: 1;}
+			}
+			
+			#list .car2An{animation:2s car2In forwards ;-webkit-animation:2s car2In forwards ;}
+			@-webkit-keyframes car2In {
+				0%{ -webkit-transform: translate(600px,0PX) ; transform: translate(600px,0PX) ; opacity: 0;}
+				50%{-webkit-transform: translate(450PX,200px) ;transform: translate(450px,200px) ; opacity: 0.5;}
+				100%{-webkit-transform: translate(150PX,280px) ;transform: translate(150px,280px)  ; opacity: 1;}
+			}
+			@keyframes car2In{
+				0%{ -webkit-transform: translate(600px,0PX) ; transform: translate(600px,0PX) ; opacity: 0;}
+				50%{-webkit-transform: translate(450PX,200px) ;transform: translate(450px,200px) ; opacity: 0.5;}
+				100%{-webkit-transform: translate(150PX,280px) ;transform: translate(150px,280px)  ; opacity: 1;}
+				
+			}
+			#list .car3An{animation:2s car3In forwards ;-webkit-animation:2s car3In forwards ;}
+			@-webkit-keyframes car3In {
+				0%{ -webkit-transform: translate(100px,0PX) ; transform: translate(100px,0PX) ; opacity: 0;}
+				50%{-webkit-transform: translate(150PX,200px) ;transform: translate(150px,200px) ; opacity: 0.5;}
+				100%{-webkit-transform: translate(260PX,230px) ;transform: translate(260px,230px)  ; opacity: 1;}
+			}
+			@keyframes car3In{
+				0%{ -webkit-transform: translate(100px,0PX) ; transform: translate(100px,0PX) ; opacity: 0;}
+				50%{-webkit-transform: translate(150PX,200px) ;transform: translate(150px,200px) ; opacity: 0.5;}
+				100%{-webkit-transform: translate(260PX,230px) ;transform: translate(260px,230px)  ; opacity: 1;}
+				
+			}
+			#list .car4An{animation:2s car4In forwards ;-webkit-animation:2s car4In forwards ;}
+			@-webkit-keyframes car4In {
+				0%{ -webkit-transform: translate(640px,410PX) ; transform: translate(640px,410PX) ; opacity: 0;}
+				50%{-webkit-transform: translate(450PX,420px) ;transform: translate(450px,420px) ; opacity: 0.5;}
+				100%{-webkit-transform: translate(480PX,430px) ;transform: translate(480px,430px)  ; opacity: 1;}
+			}
+			@keyframes car4In{
+				0%{ -webkit-transform: translate(640px,410PX) ; transform: translate(640px,410PX) ; opacity: 0;}
+				50%{-webkit-transform: translate(450PX,420px) ;transform: translate(450px,420px) ; opacity: 0.5;}
+				100%{-webkit-transform: translate(480PX,430px) ;transform: translate(480px,430px)  ; opacity: 1;}
+				
+			}
+			#list .car5An{animation:2s car5In forwards ;-webkit-animation:2s car5In forwards ;}
+			@-webkit-keyframes car5In {
+				0%{ -webkit-transform: translate(640px,610PX) ; transform: translate(640px,610PX) ; opacity: 0;}
+				50%{-webkit-transform: translate(450PX,620px) ;transform: translate(450px,620px) ; opacity: 0.5;}
+				100%{-webkit-transform: translate(250PX,670px) ;transform: translate(250px,670px)  ; opacity: 1;}
+			}
+			@keyframes car5In{
+				0%{ -webkit-transform: translate(640px,610PX) ; transform: translate(640px,610PX) ; opacity: 0;}
+				50%{-webkit-transform: translate(450PX,620px) ;transform: translate(450px,620px) ; opacity: 0.5;}
+				100%{-webkit-transform: translate(250PX,670px) ;transform: translate(250px,670px)  ; opacity: 1;}
+				
+			}
+			#list .car6An{animation:2s car6In forwards ;-webkit-animation:2s car6In forwards ;}
+			@-webkit-keyframes car6In {
+				0%{ -webkit-transform: translate(640px,610PX) ; transform: translate(640px,610PX) ; opacity: 0;}
+				50%{-webkit-transform: translate(450PX,620px) ;transform: translate(450px,620px) ; opacity: 0.5;}
+				100%{-webkit-transform: translate(250PX,650px) ;transform: translate(250px,650px)  ; opacity: 1;}
+			}
+			@keyframes car6In{
+				0%{-webkit-transform: translate(400PX,300px) ;transform: translate(400px,300px)  ; opacity: 0;}
+				30%{-webkit-transform: translate(350PX,320px) ;transform: translate(350px,320px) ; opacity: 0.5;}
+				100%{ -webkit-transform: translate(530px,400PX) ; transform: translate(530px,400PX) ; opacity: 1;}
+				
+				
+			}
+			/*carAnimation end*/
+			
+			
+			
+			
+			/*list end*/
+			/*arr strat*/
+			#arrow{ width:10% ; height:5% ; position: absolute; left: 45%; bottom:5%; transform-style: preserve-3d; -webkit-transform-style: preserve-3d; transform:translateZ(1000px); -webkit-transform:translateZ(1000px); z-index:100 ;}
+			#arrow img{ width:100% ;}
+			#arrow img.move{-webkit-animation: 1s imgMove infinite;animation: 1s imgMove infinite;}
+			#arrow img.move2{-webkit-animation: 1s imgMove2 infinite;animation: 1s imgMove2 infinite;}
+			@-webkit-keyframes imgMove{
+				0%{ -webkit-transform: translateY(50px) ; transform: translateY(50px) ; opacity: 0;}
+				50%{-webkit-transform: translateY(0px) ;transform: translateY(0px) ; opacity: 1;}
+				100%{-webkit-transform: translateY(-50px) ;transform: translateY(-50px) ; opacity: 0;}
+			}
+			@keyframes imgMove{
+				0%{ -webkit-transform: translateY(50px) ; transform: translateY(50px) ; opacity: 0;}
+				50%{-webkit-transform: translateY(0px) ;transform: translateY(0px) ; opacity: 1;}
+				100%{-webkit-transform: translateY(-50px) ;transform: translateY(-50px) ; opacity: 0;}
+			}
+			@-webkit-keyframes imgMove2{
+				0%{ -webkit-transform: translateX(50px) ; transform: translateX(50px) ; opacity: 0;}
+				50%{-webkit-transform: translateX(0px) ;transform: translateX(0px) ; opacity: 1;}
+				100%{-webkit-transform: translateX(-50px) ;transform: translateX(-50px) ; opacity: 0;}
+			}
+			@keyframes imgMove2{
+				0%{ -webkit-transform: translateX(50px) ; transform: translateX(50px) ; opacity: 0;}
+				50%{-webkit-transform: translateX(0px) ;transform: translateX(0px) ; opacity: 1;}
+				100%{-webkit-transform: translateX(-50px) ;transform: translateX(-50px) ; opacity: 0;}
+			}
+		
+			/*canvas start*/
+			#c1{ position: absolute; left: 0; top:0; z-index:10 ;}
+			/*canvas end*/
+			/*canvasback start*/
+			
+			#canvasback{ width:100% ; height:100% ; background: paleturquoise ; position: absolute; left: 0; top:0 ; z-index: 9;}
+			#canvasback p{ width:300px%  ;  height:200px; position: absolute; text-align: center; font-size: 100px ; line-height:200px ; font-weight: bold;}
+			#canvasback p:nth-of-type(1){ left:150px ; top:200px ; -webkit-animation:3s canvasbackMove linear infinite ; animation:3s canvasbackMove linear infinite ; color:  yellow;}
+			#canvasback p:nth-of-type(2){ right:100px ; top:500px ;-webkit-animation:3s canvasbackMove2 linear infinite ; animation:3s canvasbackMove2 linear infinite ; color: whitesmoke;}
+			
+			@-webkit-keyframes canvasbackMove{
+				0%{ opacity: 0; -webkit-transform: scale(1); transform: scale(1);}
+				50%{opacity: 1;-webkit-transform: scale(2) translatex(-100px); transform: scale(1.5)translatex(-100px);}
+				100%{opacity: 0;-webkit-transform: scale(1); transform: scale(1);} 
+			}
+			@keyframes canvasbackMove{
+				0%{ opacity: 0; -webkit-transform: scale(1); transform: scale(1);}
+				50%{opacity: 1;-webkit-transform: scale(1.5) translatex(-100px); transform: scale(1.5) translatex(-100px);}
+				100%{opacity: 0;-webkit-transform: scale(1); transform: scale(1);}
+			}
+			@-webkit-keyframes canvasbackMove2{
+				0%{ opacity: 0; -webkit-transform: scale(1); transform: scale(1);}
+				50%{opacity: 1;-webkit-transform: scale(2) translatex(100px); transform: scale(1.5)translatex(100px);}
+				100%{opacity: 0;-webkit-transform: scale(1); transform: scale(1);} 
+			}
+			@keyframes canvasbackMove2{
+				0%{ opacity: 0; -webkit-transform: scale(1); transform: scale(1);}
+				50%{opacity: 1;-webkit-transform: scale(1.5) translatex(100px); transform: scale(1.5) translatex(100px);}
+				100%{opacity: 0;-webkit-transform: scale(1); transform: scale(1);}
+			}
+			
+			/*canvasback end*/
+			/*music start*/
+			
+			#music{width: 56px; height:56px ; position: absolute;  left:10% ; top:5% ; transform-style: preserve-3d; -webkit-transform-style: preserve-3d; transform:translateZ(1000px); -webkit-transform:translateZ(1000px);  
+			z-index:100;}
+			#music img{width:100% ; height: 100%;}
+			#music.musicmove{ -webkit-animation:3s music linear infinite ; animation:3s music linear infinite ;width: 56px; height:56px ; position: absolute;  left:10% ; top:5% ; transform-style: preserve-3d; -webkit-transform-style: preserve-3d; transform:translateZ(1000px); -webkit-transform:translateZ(1000px)}
+			@-webkit-keyframes music{
+				0%{ -webkit-transform:  rotateZ(0deg); transform:  rotateZ(0deg);}
+				30%{-webkit-transform:  rotateZ(-60deg);transform:  rotateZ(-60deg);}
+				50%{-webkit-transform:  rotateZ(0deg);transform:  rotateZ(0deg);}
+				70%{-webkit-transform:  rotateZ(60deg);transform:  rotateZ(60deg)}
+				100%{-webkit-transform:  rotateZ(0deg);transform:  rotateZ(0deg);}
+			}
+			@keyframes music{
+				0%{ -webkit-transform:  rotateZ(0deg); transform:  rotateZ(0deg);}
+				30%{-webkit-transform:  rotateZ(-60deg);transform:  rotateZ(-60deg);}
+				50%{-webkit-transform:  rotateZ(0deg);transform:  rotateZ(0deg);}
+				70%{-webkit-transform:  rotateZ(60deg);transform:  rotateZ(60deg)}
+				100%{-webkit-transform:  rotateZ(0deg);transform:  rotateZ(0deg);}
+			}
+			
+			/*music end*/
+			
+			/*loading start*/
+			
+			#loading{ width:100%;  height:100% ; background: black ; position:absolute; left: 0; top: 0; z-index:1000 ;}
+			#loading p{ width:300px ;  height:200px; position: absolute; left:170px ; top:40%; color:white ; text-align: center; font-size: 50px ; line-height:200px ; font-weight: bold; -webkit-animation:3s loadingMove linear infinite ; animation:3s loadingMove linear infinite ;}
+			@-webkit-keyframes loadingMove{
+				0%{ opacity: 0; -webkit-transform: scale(1); transform: scale(1);}
+				50%{opacity: 1;-webkit-transform: scale(1.5); transform: scale(1.5);}
+				100%{opacity: 0;-webkit-transform: scale(1); transform: scale(1);} 
+			}
+			@keyframes loadingMove{
+				0%{ opacity: 0; -webkit-transform: scale(1); transform: scale(1);}
+				50%{opacity: 1;-webkit-transform: scale(1.5); transform: scale(1.5);}
+				100%{opacity: 0;-webkit-transform: scale(1); transform: scale(1);}
+			}
+			
+			
+			/*loading end*/
+			
+			
+		</style>
+	</head>
+	
+	
+	<script src="js/zepto.min.js"></script>
+	<script src="js/touch.js"></script>
+	<script src="js/fx.js"></script>
+	
+	
+	<script>
+		var picH=960
+		var picW=640
+		var oldviewH=document.documentElement.clientHeight
+		//console.log(oldviewH)
+		var scale=oldviewH/picH
+		document.write('<meta name="viewport"  content="width=device-width,initial-scale='+scale+',user-scalable=no"/>')
+		var nowviewH=document.documentElement.clientHeight
+		var nowviewW=document.documentElement.clientWidth
+	</script>
+	<body>
+		<div id="main">
+			<canvas id="c1" width="640" height="960"></canvas>
+			<div id="canvasback">
+				<p>全新体验</p>
+				<p>马上开始</p>
+			</div>
+			<div id="view">
+				<ul id="list">
+					<li>
+						<!--<div class="car">
+							<img src="img/car1.png">
+						</div>-->
+					</li>
+					<li>
+						<!--<div class="car">
+							<img src="img/car2.png">
+						</div>-->
+					</li>
+					<li id="page">
+						<div></div>
+						<div></div>
+						<div></div>
+						<!--<div class="car">
+							<img src="img/car3.png">
+						</div>-->
+					</li>
+					<li>
+						<!--<div class="car">
+							<img src="img/car4.png">
+						</div>-->
+					</li>
+					<li>
+						<!--<div class="car" style="width:800px ;">
+							<img src="img/car5.png">
+						</div>-->
+					</li>
+					<li>
+						<!--<div class="car">
+							<img src="img/car6.png">
+						</div>-->
+					</li>
+				</ul>
+			</div>
+			<div id="arrow">
+				<img src="img/arr.png" class="move">
+			</div>
+			<div id="music" class="musicmove">
+				<img src="img/music.png">
+			</div>
+			<audio id='mp3'src="mp3.mp3" autoplay="autoplay" loop="loop"></audio>
+			<div id="loading">
+				<p>loading......</p>
+			</div>
+		</div>
+		<script>
+			
+			$('#list').on('touchmove',function(){  // 划屏是阻止页面滑动
+				
+				return false;
+			});
+			$('#list li').on('transitionend',function(ev){
+				return false
+				
+				
+			})
+			$('#list li').on('webkitTransitionEnd',function(ev){
+				return false
+				
+				
+			})
+			
+			var Picdata=null;
+			var Picdata2=null;
+			var canvasdata=null;
+			var cardata=null
+			
+			loadAll()
+			function loadAll(){
+				var arr=[]
+				var imgiNow=0
+			 	Picdata=[
+					{img:'img/b.jpg'},
+					{img:'img/1.jpg'},
+					{img:'img/2.jpg'},
+					{img:'img/3.jpg'},
+					{img:'img/4.jpg'},
+					{img:'img/5.jpg'},
+					
+				
+					]
+				Picdata2=[
+				
+					{img:'img/3.1.jpg'},
+					{img:'img/3.2.jpg'},
+					{img:'img/3.3.jpg'},
+				
+					]
+				cardata=[
+					{img:'img/car1.png'},
+					{img:'img/car2.png'},
+					{img:'img/car3.png'},
+					{img:'img/car4.png'},
+					{img:'img/car5.png'},
+					{img:'img/car6.png'},
+
+					]
+				canvasdata=[{img:'img/a.jpg'}]
+				
+				for(i=0;i<Picdata.length;i++){
+					
+					arr.push(Picdata[i].img)
+					
+					
+					}
+				for(j=0;j<Picdata2.length;j++){
+					
+					arr.push(Picdata2[j].img)
+					
+					
+					}
+				for(l=0;l<cardata.length;l++){
+					var $img=$('<img>')
+					var $div=$('<div>')
+					$div.attr('class','car')
+					if(l==4){
+						$div.css('width',800)
+						
+					}
+					$img.attr('src',cardata[l].img)
+					$img.appendTo($div)
+					$('#list li').eq(l).append($div)
+					arr.push(cardata[l].img)
+					
+				}
+				arr.push(canvasdata[0].img)
+				for(k=0;k<arr.length;k++){   //图片预加载
+					var yImg=new Image()
+					yImg.src=arr[k]
+					yImg.onload=function(){
+						
+						imgiNow++
+						if(imgiNow==arr.length){
+							setTimeout(function(){
+								
+								$('#loading').hide()
+								
+							},1000)
+							
+							
+							}
+						}
+					
+					}
+				
+				
+				}
+			playMusic()
+			function playMusic(){
+				$('#music').on('touchstart',function(){
+					
+					if($('#mp3').get(0).paused){
+						
+						$('#mp3').get(0).play()
+						$('#music').attr('class','musicmove')
+					}
+					else{
+						
+						$('#mp3').get(0).pause()
+						$('#music').attr('class','')
+						
+						
+					}
+					
+				})
+			}
+			setCanvas()
+			function setCanvas(){
+				
+				var C1=document.getElementById('c1');
+				var oGC=C1.getContext('2d');
+				var arr=[];
+				var yImg=new Image();
+				yImg.onload=function(){
+					
+					oGC.drawImage(yImg,0,0)
+					
+				}
+				yImg.src=canvasdata[0].img
+				$('#c1').on('touchstart',function(ev){
+					oGC.globalCompositeOperation='destination-out';
+					var $touch=ev.changedTouches[0];
+					oGC.beginPath()
+					oGC.arc($touch.pageX+(picW-nowviewW)/2,$touch.pageY,60,0,360*Math.PI/180)
+					oGC.fill()
+					oGC.closePath()
+					$('#c1').on('touchmove',function(ev){
+						var $touch=ev.changedTouches[0];
+						oGC.beginPath()
+						oGC.arc($touch.pageX+(picW-nowviewW)/2,$touch.pageY,60,0,360*Math.PI/180)
+						oGC.fill()
+						oGC.closePath();
+					})
+					$('#c1').on('touchend',function(){
+						var getImg=oGC.getImageData(0,0,C1.width,C1.height);
+						var gW=getImg.width;
+						var gH=getImg.height;
+						var gD=getImg.data;
+						for(i=0;i<gW*gH;i++){
+							if(gD[i*4+3]==0){
+								arr.push(i)
+							}
+							
+						}
+						console.log(arr.length)
+						if(arr.length>=(gD.length/4)){
+							
+							$('#c1').animate({'opacity':0},1000,'linear',function(){
+								
+								$('#c1').hide()
+								$('#canvasback').hide(1000)
+								//loadlistPic()  // 加载图片调用
+								$('#list li').eq(0).find('.car').addClass('car1An')
+							})
+						}
+						$(this).off('touchmove touchend')
+					})
+					
+					
+				})
+				
+			}
+			changePic()
+			function changePic(){
+				changePage()  //  调用page
+				var iNow=0
+				
+				$('#list li').on("swipeUp",function(){
+					$('#arrow img').attr('src','img/arr.png').attr('class','move')
+					if($(this).index()==1){  // 判断箭头变化条件
+						$('#arrow').attr('class','move2')
+						$('#arrow img').attr('src','img/arr2.png').attr('class','move2')
+					}
+					iNow++
+					$('#list').css('transform','scale(0.5) rotate3d(1,0,0,'+iNow*60+'deg)')
+					//onoff=true;
+					//CarAnmation(onoff)
+				})
+				$('#list li').on("swipeDown",function(){
+					
+					$('#arrow img').attr('src','img/arr.png').attr('class','move')
+					if($(this).index()==3){   // 判断箭头变化条件
+						$('#arrow').attr('class','move2')
+						$('#arrow img').attr('src','img/arr2.png').attr('class','move2')
+						
+					}
+					iNow--
+					$('#list').css('transform','scale(0.5) rotate3d(1,0,0,'+iNow*60+'deg)')
+					
+				})
+				$('#list').on('transitionend',function(){
+					$('#page div').css('transform','rotateY(0deg)')
+					$('#list').css('transform','scale(1) rotate3d(1,0,0,'+iNow*60+'deg)')
+					
+				})
+				$('#list').on('webkitTransitionEnd',function(){ // 兼容
+					$('#page div').css('transform','rotateY(0deg)')
+					$('#list').css('transform','scale(1) rotate3d(1,0,0,'+iNow*60+'deg)')
+					
+				})
+			}
+			CarAnmation()
+			function CarAnmation(){
+				var iNow=0
+				var onoff=true;
+				$('#list li').on('swipeUp',function(){
+					iNow++
+						if(iNow>5){
+							
+							iNow=0
+						}
+						
+				})
+				$('#list li').on('swipeDown',function(){
+					iNow--
+						if(iNow<0){
+							
+							iNow=5
+						}
+					
+				})
+				$('#list').on('transitionend',function(){
+					if(onoff){
+					$('#list li .car').attr('class','car')
+					$('#list li').eq(iNow).find('.car').addClass('car'+(iNow+1)+'An')
+					}
+					onoff=!onoff
+					
+				})
+				$('#list').on('webkitTransitionEnd',function(){ //兼容
+					if(onoff){
+					$('#list li .car').attr('class','car')
+					$('#list li').eq(iNow).find('.car').addClass('car'+(iNow+1)+'An')
+					}
+					onoff=!onoff
+					
+				})
+				
+				
+				
+				
+			}
+			function changePage(){
+				$('#page div').on('swipeLeft',function(ev){
+					$('#list li .car').attr('class','car')
+					$(this).css('transform','rotateY(-180deg)')
+					ev.stopPropagation();  // 没用 问老师
+					
+				})
+				
+				
+			}
+			loadlistPic()
+			function  loadlistPic(){
+				
+				for(i=0;i<Picdata.length;i++){
+					
+					$('#list li').eq(i).css('background','url('+Picdata[i].img+') no-repeat').css('background-size','cover')
+					
+					
+					
+				}
+				for(j=0;j<Picdata2.length;j++){
+					
+					$('#page div').eq(j).css('background','url('+Picdata2[j].img+') no-repeat').css('background-size','cover')
+					
+					
+				}
+				
+
+			}
+
+		</script>
+	</body>
+</html>
